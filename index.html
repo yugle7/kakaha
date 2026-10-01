@@ -1,0 +1,412 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no"/>
+    <meta name="mobile-web-app-capable" content="yes"/>
+    <meta name="theme-color" content="#2a2a2a"/>
+    <meta name="msapplication-config" content="none">
+
+    <title data-i18n="appName"></title>
+
+    <link rel="canonical" href="https://yugle7.github.io/poop-tracker/"/>
+    <link rel="manifest" href="manifest.webmanifest"/>
+    <link rel="stylesheet" href="style.css"/>
+
+    <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg"/>
+
+    <link rel="apple-touch-icon" href="icons/icon-192.png">
+    <link rel="yandex-tableau-widget" href="tableau.json">
+</head>
+<body>
+
+<section id="calendar-page" class="width-500 safe">
+    <div id="calendar"></div>
+    <h3 id="chosen-day" class="accent center"></h3>
+    <div id="chosen-records"></div>
+</section>
+
+<div id="overlay"></div>
+
+<section id="record-page" class="hidden">
+    <div class="scroll">
+        <div class="width-500 col gap-30 pad-20">
+            <section>
+                <div class="row gap-15">
+                    <button id="pooped-date" aria-haspopup="dialog" class="tap"
+                            data-i18n-aria-label="selectDate"></button>
+
+                    <button id="pooped-time" aria-haspopup="dialog" class="tap"
+                            data-i18n-aria-label="selectTime"></button>
+
+                </div>
+            </section>
+            <section>
+                <div id="bristol-label"></div>
+                <br>
+                <div id="bristol-icons" class="row" role="radiogroup"
+                     data-i18n-aria-label="bristolScale"></div>
+            </section>
+
+            <section id="color">
+                <div id="color-label"></div>
+                <br>
+                <div id="color-icons" class="color-grid" role="radiogroup"
+                     data-i18n-aria-label="color"></div>
+            </section>
+
+            <section id="volume">
+                <div id="volume-label"></div>
+                <br/>
+                <span id="volume-value" class="gray small"></span>
+                <input id="volume-range" type="range" min="0" max="99" step="1"
+                       data-i18n-aria-label="volumeRange" aria-label="">
+            </section>
+
+            <section>
+                <div class="row add">
+                    <h3 data-i18n="tags"></h3>
+                    <button id="edit-tags" class="right help small" data-i18n="change">
+                    </button>
+                </div>
+                <br>
+                <div id="tag-buttons"></div>
+            </section>
+
+            <button id="remove" class="red hidden pad-20" data-i18n="remove"></button>
+
+            <button id="approve" data-i18n-aria-label="approve">
+                <svg>
+                    <use href="sprite.svg#save"></use>
+                </svg>
+            </button>
+
+            <button id="reject" data-i18n-aria-label="reject">
+                <svg>
+                    <use href="sprite.svg#cancel"></use>
+                </svg>
+            </button>
+        </div>
+    </div>
+
+
+    <div id="tags-editor">
+        <div class="row">
+            <input id="tag" type="text" maxlength="24"
+                   data-i18n-placeholder="newTag"
+                   data-i18n-aria-label="newTag" aria-label="">
+            <button id="create-tag" class="right small" data-i18n="add"></button>
+        </div>
+
+        <div data-i18n="tagActions" class="small gray pad-10"></div>
+        <div id="tag-actions"></div>
+
+        <footer>
+            <button id="close-tags" class="right" data-i18n="cancel"></button>
+            <button id="apply-tags" class="accent">OK</button>
+        </footer>
+    </div>
+
+    <div id="when-picker">
+        <header id="watch">
+            <button id="day" class="tap"></button>
+            <button id="hour" class="tap"></button>
+
+            <svg id="colon" viewBox="0 0 6 24" width="6" height="24">
+                <circle cx="3" cy="8" r="1" stroke="var(--text)" fill="none"/>
+                <circle cx="3" cy="16" r="1" stroke="var(--text)" fill="none"/>
+            </svg>
+
+            <button id="minute" class="tap"></button>
+        </header>
+
+        <div id="clock">
+            <div id="white"></div>
+            <div id="black"></div>
+            <div id="center"></div>
+            <div id="line"></div>
+            <div id="hand"></div>
+        </div>
+
+        <div id="when-calendar">
+            <div class="days"></div>
+            <div class="days" id="when-days"></div>
+        </div>
+
+        <footer>
+            <button id="when-prev" data-i18n-aria-label="previous">
+                <svg>
+                    <use href="sprite.svg#prev"></use>
+                </svg>
+            </button>
+
+            <span id="when-month"></span>
+
+            <button id="when-next" data-i18n-aria-label="next">
+                <svg>
+                    <use href="sprite.svg#next"></use>
+                </svg>
+            </button>
+
+            <button id="close-when" class="right" data-i18n="cancel"></button>
+            <button id="apply-when" class="accent">OK</button>
+        </footer>
+    </div>
+</section>
+
+<section id="stats-page" class="width-500 pad-20 safe hidden">
+    <div id="period">
+        <div></div>
+        <button class="active" data-i="0" data-i18n="week"></button>
+        <button data-i="1" data-i18n="month"></button>
+        <button data-i="2" data-i18n="year"></button>
+    </div>
+
+    <div id="range">
+        <button type="button" data-add="-1"
+                data-i18n-aria-label="previousPeriod">
+            <svg>
+                <use href="sprite.svg#prev"></use>
+            </svg>
+        </button>
+        <span id="range-label"></span>
+        <button type="button" data-add="1"
+                data-i18n-aria-label="nextPeriod">
+            <svg>
+                <use href="sprite.svg#next"></use>
+            </svg>
+        </button>
+    </div>
+
+    <div class="card">
+        <h3 data-i18n="tags"></h3>
+        <br/>
+        <div class="h-list" id="tags-list"></div>
+        <br/>
+        <button class="row gap-10" id="with-fails">
+            <svg class="tool">
+                <use href="sprite.svg#check"></use>
+            </svg>
+            <span data-i18n="withFails" class="help small"></span>
+        </button>
+    </div>
+
+    <div class="card">
+        <h3 data-i18n="color"></h3>
+        <br/>
+        <div class="h-list" id="color-list"></div>
+    </div>
+
+    <div class="card">
+        <h3 data-i18n="shape"></h3>
+        <br/>
+        <div class="h-list" id="shape-list"></div>
+    </div>
+
+    <div class="card" style="--color: var(--yellow)">
+        <h3 class="row gap-8">
+            <span data-i18n="bristol"></span>
+            <span class="gray">—</span>
+            <span class="gray"></span>
+        </h3>
+        <br/>
+        <div class="v-chart" id="bristol-chart"></div>
+    </div>
+
+    <div class="card">
+        <h3 class="row gap-8">
+            <span data-i18n="count"></span>
+            <span class="gray">—</span>
+            <span class="gray"></span>
+        </h3>
+        <br/>
+        <div class="v-chart" id="count-chart"></div>
+    </div>
+
+    <div class="card" style="--color: var(--yellow)">
+        <h3 class="row gap-8">
+            <span data-i18n="volume"></span>
+            <span class="gray">—</span>
+            <span class="gray"></span>
+        </h3>
+        <br/>
+        <div class="v-chart" id="volume-chart"></div>
+    </div>
+</section>
+
+
+<section id="person-page" class="width-500 safe hidden">
+    <br/>
+
+    <button id="person">
+        <svg class="icon">
+            <use href="sprite.svg#person"></use>
+        </svg>
+        <span class="row gap-10"></span>
+    </button>
+
+    <br/>
+
+    <a href="https://pay.cloudtips.ru/p/9e3a23d6" target="_blank">
+        <svg class="icon">
+            <use href="sprite.svg#heart"></use>
+        </svg>
+        <span data-i18n="support"></span>
+    </a>
+
+    <a href="mailto:yuzhakov.gleb@gmail.com?subject=PoopTracker">
+        <svg class="icon">
+            <use href="sprite.svg#chat"></use>
+        </svg>
+        <span data-i18n="mailTo"></span>
+    </a>
+
+    <a href="https://yugle7.github.io/poop-tracker/privacy.html" target="_blank">
+        <svg class="icon">
+            <use href="sprite.svg#shield"></use>
+        </svg>
+        <span data-i18n="privacy"></span>
+    </a>
+
+    <br/>
+
+    <button id="reset" class="left row gap-10 pad-10">
+        <svg class="icon">
+            <use href="sprite.svg#reset"></use>
+        </svg>
+        <span data-i18n="reset"></span>
+    </button>
+
+    <div id="person-picker">
+        <form id="profile" novalidate autocomplete="off">
+            <div class="field">
+                <label class="label" for="birthdate" data-i18n="birthdate"></label>
+                <input
+                        class="input"
+                        id="birthdate"
+                        name="birthdate"
+                        type="text"
+                        inputmode="numeric"
+                        autocomplete="off"
+                        autocorrect="off"
+                        autocapitalize="off"
+                        placeholder="31.12.2000"
+                        spellcheck="false"
+                        maxlength="10"
+                        required
+                >
+            </div>
+
+            <div class="row gap-15">
+                <div class="field sex">
+                    <label class="label" data-i18n="sex"></label>
+
+                    <div class="segment" id="sex">
+                        <input type="radio" name="sex" id="female" value="female" checked>
+                        <label for="female" data-i18n="female"></label>
+
+                        <input type="radio" name="sex" id="male" value="male">
+                        <label for="male" data-i18n="male"></label>
+                    </div>
+                </div>
+
+                <div class="field weight">
+                    <label class="label" for="weight" data-i18n="weight"></label>
+
+                    <div>
+                        <input
+                                class="input"
+                                id="weight"
+                                name="weight"
+                                type="text"
+                                inputmode="decimal"
+                                autocomplete="off"
+                                placeholder="65"
+                                maxlength="5"
+                                required
+                        >
+                        <span class="unit" data-i18n="kg"></span>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <footer>
+            <button id="close-person" class="right" data-i18n="cancel"></button>
+            <button id="apply-person" class="accent">OK</button>
+        </footer>
+    </div>
+</section>
+
+<div class="hidden">
+    <div id="calendars"></div>
+</div>
+
+<nav data-i18n-aria-label="mainNavigation">
+    <div id="nav">
+        <button data-page="calendar" class="pad-10 active" data-i18n-aria-label="calendar" aria-selected="true">
+            <svg>
+                <use href="sprite.svg#calendar"></use>
+            </svg>
+        </button>
+
+        <button data-page="record" class="pad-10" data-i18n-aria-label="record">
+            <svg>
+                <use href="sprite.svg#plus"></use>
+            </svg>
+        </button>
+
+        <button data-page="stats" class="pad-10" data-i18n-aria-label="stats">
+            <svg>
+                <use href="sprite.svg#stats"></use>
+            </svg>
+        </button>
+
+        <button data-page="person" class="pad-10" data-i18n-aria-label="person">
+            <svg>
+                <use href="sprite.svg#settings"></use>
+            </svg>
+        </button>
+    </div>
+</nav>
+
+<div id="modal" hidden>
+    <div class="dialog" role="dialog" aria-modal="true">
+        <p id="question"></p>
+        <div class="actions">
+            <button id="confirm" data-i18n="yes"></button>
+            <button id="cancel" data-i18n="no"></button>
+        </div>
+    </div>
+</div>
+
+<script src="data.js"></script>
+<script src="script.js"></script>
+
+<script>
+    if (navigator.serviceWorker) {
+        navigator.serviceWorker
+            .register("/poop-tracker/sw.js", {
+                scope: "/poop-tracker/",
+                updateViaCache: "none"
+            })
+            .then((reg) => {
+                reg.update();
+
+                if (reg.waiting) {
+                    reg.waiting.postMessage("skipWaiting");
+                }
+
+                navigator.serviceWorker.addEventListener(
+                    "controllerchange",
+                    () => {
+                        window.location.reload();
+                    }
+                );
+            });
+    }
+</script>
+
+</body>
+</html>

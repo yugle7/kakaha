@@ -1,0 +1,1302 @@
+/* ==========================================================================
+   1. ПЕРЕМЕННЫЕ
+   ========================================================================== */
+
+:root {
+    --bg: #f7f6f4;
+    --text: #4d5156;
+    --icon: #5f646e;
+    --head: white;
+    --line: #e7e7e7;
+    --fade: #f2f1ef;
+
+    --green: #4aaf8c;
+    --blue: #7a82da;
+    --red: #c97b72;
+    --yellow: #c9a84c;
+
+    --accent: var(--blue);
+
+    --value: 0;
+    --inner: none;
+    --outer: gray;
+    --width: 100;
+    --radius: 12px;
+
+    --count: 0;
+    --fails: 0;
+    --with-fails: 1;
+    --total: 1;
+
+    --inner-white: #ededca;
+    --inner-gray: #9d9d98;
+    --inner-yellow: #d8c34a;
+    --inner-orange: #d98a3a;
+    --inner-light-brown: #b98258;
+    --inner-brown: #875a3d;
+    --inner-dark-brown: #54382b;
+    --inner-black: #29231f;
+    --inner-green: #638b68;
+    --inner-red: #bd5550;
+
+    --outer-white: #bfbfa8;
+    --outer-gray: #857d77;
+    --outer-yellow: #a47b3d;
+    --outer-orange: #8b5d38;
+    --outer-light-brown: #744b35;
+    --outer-brown: #54382b;
+    --outer-dark-brown: #80604b;
+    --outer-black: #5e5d5d;
+    --outer-green: #4d684f;
+    --outer-red: #873d3a;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg: #2a2a2a;
+        --text: #c8c8c8;
+        --head: #333333;
+        --icon: #bcb6a6;
+        --line: #444444;
+        --fade: #2d2d2d;
+        --help: #838282;
+
+        --accent: var(--yellow);
+
+        --inner-white: #bcbcb7;
+        --inner-gray: #94938f;
+        --inner-yellow: #c2ae51;
+        --inner-orange: #c47e42;
+        --inner-light-brown: #9d6a4c;
+        --inner-brown: #704938;
+        --inner-dark-brown: #50372d;
+        --inner-black: #3b3a39;
+        --inner-green: #68866f;
+        --inner-red: #b65f5a;
+
+        --outer-white: #817d78;
+        --outer-gray: #696763;
+        --outer-yellow: #8f7c3f;
+        --outer-orange: #95613b;
+        --outer-light-brown: #80543e;
+        --outer-brown: #886049;
+        --outer-dark-brown: #674a3a;
+        --outer-black: #5a5753;
+        --outer-green: #536c59;
+        --outer-red: #884844;
+    }
+}
+
+/* ==========================================================================
+   2. СБРОС И БАЗА
+   ========================================================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    box-sizing: border-box;
+    border: none;
+    line-height: 1.5;
+    font-size: 18px;
+    font-weight: 400;
+    color: var(--text);
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100%;
+    overscroll-behavior: none;
+    touch-action: pan-y;
+}
+
+/* ==========================================================================
+   3. УТИЛИТЫ
+   ========================================================================== */
+
+/* --- Скрытие --- */
+.hidden {
+    display: none !important;
+}
+
+/* --- Типографика --- */
+.gray {
+    color: gray;
+}
+
+.small {
+    font-size: 14px;
+}
+
+.big {
+    font-size: 20px !important;
+}
+
+.mono {
+    font-variant-numeric: tabular-nums;
+}
+
+.accent {
+    color: var(--accent);
+}
+
+.help {
+    color: var(--help);
+}
+
+.red {
+    color: var(--red);
+    border-color: var(--red);
+    stroke: var(--red);
+}
+
+.blue {
+    color: var(--blue);
+    border-color: var(--blue);
+    stroke: var(--blue);
+}
+
+.green {
+    color: var(--green);
+    stroke: var(--green);
+}
+
+/* --- Выравнивание --- */
+.center {
+    align-content: center;
+    text-align: center;
+    justify-content: center;
+}
+
+.left {
+    text-align: left;
+}
+
+.right {
+    margin-left: auto;
+    max-height: 50px;
+}
+
+/* --- Раскладка --- */
+.col {
+    display: flex;
+    flex-direction: column;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+}
+
+/* --- Отступы / зазоры --- */
+.gap-8 {
+    gap: 8px;
+}
+
+.gap-10 {
+    gap: 10px;
+}
+
+.gap-15 {
+    gap: 15px;
+}
+
+.gap-30 {
+    gap: 30px;
+}
+
+.pad-10 {
+    padding: 10px;
+}
+
+.pad-20 {
+    padding: 20px;
+}
+
+.safe {
+    padding-bottom: calc(78px + env(safe-area-inset-bottom));
+}
+
+/* --- Контейнеры --- */
+.width-500 {
+    max-width: 500px;
+    width: 100%;
+    margin: 0 auto;
+    position: relative;
+}
+
+/* --- Инлайновые метки (счётчики на иконках) --- */
+
+small {
+    position: absolute;
+    font-size: 12px;
+    right: -3px;
+    top: -3px;
+    color: gray;
+}
+
+i {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    opacity: .7;
+    z-index: 0;
+}
+
+/* ==========================================================================
+   4. ОБЩИЕ КОМПОНЕНТЫ
+   ========================================================================== */
+
+/* --- Кнопки / ссылки --- */
+button, input {
+    font: inherit;
+    background-color: inherit;
+}
+
+button {
+    border: 0;
+    line-height: 0;
+    background: none;
+    color: inherit;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+}
+
+a {
+    outline: none;
+    text-decoration: none;
+}
+
+a, li {
+    cursor: pointer;
+}
+
+/* --- Иконки --- */
+svg {
+    background: transparent;
+    stroke-width: 2;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke: var(--icon);
+    cursor: pointer;
+}
+
+button svg {
+    width: 32px;
+    min-width: 32px;
+    height: 32px;
+}
+
+.tool {
+    width: 24px;
+    min-width: 24px;
+    height: 24px;
+}
+
+.icon {
+    width: 30px;
+    min-width: 30px;
+    height: 30px;
+    stroke: gray;
+}
+
+.img {
+    width: 80px;
+    min-width: 80px;
+    height: 40px;
+}
+
+.pic {
+    width: 150px;
+    padding: 10px;
+    aspect-ratio: 1;
+    stroke-width: 1;
+}
+
+/* --- Кнопки-таблетки --- */
+.tap {
+    padding: 0 12px;
+    min-height: 50px;
+    border-radius: 20px;
+    vertical-align: middle;
+    color: var(--accent);
+    border: 2px solid var(--accent);
+}
+
+.tap.selected {
+    background: var(--accent);
+    color: var(--bg);
+}
+
+/* --- Заголовки --- */
+h2 {
+    width: 100%;
+    font-size: 20px;
+    padding: 10px 20px;
+    justify-content: space-between;
+}
+
+h2 button {
+    padding: 10px;
+}
+
+h3 {
+    width: 100%;
+}
+
+/* --- Скролл-контейнер --- */
+.scroll {
+    display: flex;
+    flex: 1;
+    overflow-y: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.scroll::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+}
+
+/* --- Футер шторок --- */
+footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-height: 50px;
+    max-width: 500px;
+}
+
+footer button {
+    padding: 20px 20px 30px;
+    background: transparent;
+    font-size: 16px;
+}
+
+/* --- Инпуты (общие) --- */
+input {
+    padding: 10px;
+}
+
+input,
+select {
+    width: fit-content;
+    outline: none;
+    vertical-align: middle;
+}
+
+/* --- Слайдер --- */
+input[type=range] {
+    width: 100%;
+    height: 32px;
+    appearance: none;
+    -webkit-appearance: none;
+    background: transparent;
+    cursor: pointer;
+    accent-color: var(--accent);
+}
+
+input[type=range]::-webkit-slider-runnable-track {
+    height: 3px;
+    border-radius: 2px;
+    background: linear-gradient(
+            to right,
+            var(--accent) 0%,
+            var(--accent) var(--value, 50%),
+            var(--line) var(--value, 50%),
+            var(--line) 100%
+    );
+}
+
+input[type=range]::-webkit-slider-thumb {
+    width: 20px;
+    height: 20px;
+    margin-top: -8px;
+    border: 0;
+    border-radius: 50%;
+    background: var(--accent);
+    appearance: none;
+    -webkit-appearance: none;
+    transition: transform 120ms ease;
+}
+
+input[type=range]:active::-webkit-slider-thumb {
+    transform: scale(1.15);
+}
+
+input[type=range]::-moz-range-track {
+    height: 3px;
+    border-radius: 2px;
+    background: var(--bg);
+}
+
+input[type=range]::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    border: 0;
+    border-radius: 50%;
+    background: var(--accent);
+    transition: transform 120ms ease;
+}
+
+input[type=range]:active::-moz-range-thumb {
+    transform: scale(1.15);
+}
+
+/* ==========================================================================
+   5. НИЖНЯЯ НАВИГАЦИЯ
+   ========================================================================== */
+
+nav {
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    height: 70px;
+    padding: 8px max(12px, env(safe-area-inset-left)) calc(8px + env(safe-area-inset-bottom));
+    background: var(--head);
+    border-radius: 20px 20px 0 0;
+    backdrop-filter: blur(16px);
+    border-top: 1px solid var(--line);
+    z-index: 1;
+}
+
+nav > div {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+nav > div > button {
+    padding: 10px;
+}
+
+.active > svg {
+    stroke: var(--accent);
+}
+
+/* ==========================================================================
+   6. КАЛЕНДАРЬ
+   ========================================================================== */
+
+#calendar {
+    width: 100%;
+    touch-action: pan-y;
+    overflow-x: clip;
+    overflow-y: visible;
+}
+
+#calendar h2 {
+    text-align: center;
+}
+
+.calendar {
+    height: 360px;
+}
+
+#calendars {
+    display: flex;
+    justify-content: space-between;
+    gap: 30px;
+    width: calc(300% + 60px);
+    transition: none;
+    touch-action: pan-y;
+    overflow-x: clip;
+    overflow-y: visible;
+}
+
+#calendars > div {
+    flex: 0 0 var(--width);
+    width: var(--width);
+}
+
+.days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    text-align: center;
+    justify-items: center;
+    padding: 0 20px;
+}
+
+
+.days span {
+    z-index: 1;
+    position: relative;
+    font-size: 14px;
+}
+
+.days > span {
+    color: gray;
+    padding-bottom: 10px;
+}
+
+.days > button {
+    height: 45px;
+    aspect-ratio: 1;
+    padding: 5px;
+    background: transparent;
+    border-radius: 50%;
+    position: relative;
+    line-height: 1;
+}
+
+.days > button > span {
+    font-size: 14px;
+    z-index: 1;
+    position: relative;
+}
+
+.today {
+    color: var(--accent);
+}
+
+.future {
+    color: gray;
+}
+
+.days .selected {
+    background: var(--accent) !important;
+    color: var(--bg);
+}
+
+.empty {
+    pointer-events: none;
+    text-align: center;
+    color: var(--help);
+    font-size: 13px;
+    padding: 24px 0;
+}
+
+/* ==========================================================================
+   7. СПИСОК ЗАПИСЕЙ ДНЯ
+   ========================================================================== */
+
+#chosen-records > button {
+    width: 100%;
+    padding: 10px 0;
+}
+
+#chosen-records .row {
+    flex-wrap: wrap;
+    column-gap: 10px;
+    row-gap: 0;
+    padding: 5px;
+}
+
+.record {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    width: 100%;
+    gap: 20px;
+    padding: 0 20px;
+}
+
+.tags {
+    display: flex;
+    column-gap: 10px;
+    flex-wrap: wrap;
+    padding: 7px 20px;
+}
+
+/* ==========================================================================
+   8. ФОРМА ЗАПИСИ
+   ========================================================================== */
+
+/* --- Бристоль --- */
+#bristol-icons {
+    display: grid;
+    row-gap: 20px;
+    grid-template-columns: repeat(4, 1fr);
+    justify-content: space-between;
+}
+
+#bristol-label::first-letter {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-variant-numeric: tabular-nums;
+}
+
+/* --- Цвет --- */
+.color-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(40px, 1fr));
+    gap: 14px;
+}
+
+.color {
+    width: 40px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: var(--inner);
+}
+
+div.color {
+    width: 30px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: var(--inner);
+}
+
+.color.selected {
+    outline: 2px solid var(--outer);
+}
+
+/* --- Объём --- */
+#volume {
+    position: relative;
+}
+
+#volume-value {
+    position: absolute;
+    left: 0;
+    top: 30px;
+}
+
+/* --- Теги --- */
+#tag-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.add {
+    height: 32px;
+}
+
+/* --- Кнопки действия --- */
+#approve,
+#reject {
+    position: fixed;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+#approve svg,
+#reject svg {
+    width: 24px;
+    height: 24px;
+    stroke-width: 3;
+}
+
+#approve {
+    right: 12px;
+    bottom: 12px;
+    background: var(--text);
+    opacity: .3;
+}
+
+#approve svg {
+    stroke: var(--bg);
+}
+
+#reject {
+    right: 8px;
+    top: 8px;
+}
+
+#reject svg {
+    stroke: var(--help);
+}
+
+/* ==========================================================================
+   9. НИЖНИЕ ШТОРКИ (редактор тегов, пикер даты/времени)
+   ========================================================================== */
+
+#person-picker,
+#tags-editor,
+#when-picker {
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+    z-index: 11;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 10px max(10px, env(safe-area-inset-bottom));
+    background: var(--bg);
+    border-top: 1px solid var(--line);
+    border-radius: 20px 20px 0 0;
+    transform: translateY(100%);
+    transition: transform 220ms;
+}
+
+#person-picker.open,
+#tags-editor.open,
+#when-picker.open {
+    transform: translateY(0);
+}
+
+/* --- Редактор тегов --- */
+#tag-actions {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 10px 10px 60px;
+    position: relative;
+}
+
+#tag-actions > button {
+    border-color: var(--red);
+    color: var(--red);
+}
+
+#create-tag {
+    padding: 10px;
+}
+
+#tag:placeholder-shown ~ #create-tag {
+    opacity: .5;
+}
+
+/* --- Пикер даты/времени --- */
+#when-picker {
+    height: 385px;
+    font-variant-numeric: tabular-nums;
+}
+
+#when-prev, #when-next {
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+#when-month {
+    font-size: 18px;
+}
+
+#when-picker .days > button {
+    height: 40px;
+    font-size: 14px;
+}
+
+/* --- Часы --- */
+header {
+    padding-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+header button {
+    line-height: 1;
+    font-size: 24px;
+}
+
+#watch .selected {
+    background: var(--accent);
+}
+
+#clock {
+    width: 250px;
+    height: 250px;
+    background: var(--fade);
+    border-radius: 50%;
+    position: relative;
+    touch-action: none;
+}
+
+.tick {
+    position: absolute;
+    font: 14px sans-serif;
+    transform: translate(-50%, -50%);
+}
+
+#white {
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    clip-path: circle(16px at 50% 50%);
+    pointer-events: none;
+}
+
+#white .tick {
+    color: var(--bg);
+}
+
+#hand {
+    width: 32px;
+    height: 32px;
+    position: absolute;
+    z-index: 2;
+    background: var(--accent);
+    border-radius: 50%;
+    cursor: grab;
+    touch-action: none;
+}
+
+#center {
+    width: 8px;
+    height: 8px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--accent);
+    border-radius: 50%;
+}
+
+#line {
+    position: absolute;
+    left: 50%;
+    top: calc(50% - 1px);
+    width: 2px;
+    height: 2px;
+    background: var(--accent);
+    transform-origin: 0 50%;
+}
+
+/* ==========================================================================
+   10. ОВЕРЛЕЙ
+   ========================================================================== */
+
+#overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 10;
+    background: #0004;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 180ms;
+}
+
+#overlay.open {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* ==========================================================================
+   11. СТАТИСТИКА
+   ========================================================================== */
+
+/* --- Переключатель периода --- */
+#period {
+    position: relative;
+    display: flex;
+    width: 260px;
+    height: 46px;
+    padding: 6px;
+    margin: 0 auto 16px;
+    border-radius: 14px;
+    background: var(--head);
+    user-select: none;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
+#period > div {
+    position: absolute;
+    top: 4px;
+    left: 6px;
+    width: calc((100% - 12px) / 3);
+    height: 38px;
+    border-radius: 10px;
+    background: var(--accent);
+    color: var(--bg);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+    transition: transform 0.2s ease;
+}
+
+#period > button {
+    position: relative;
+    z-index: 1;
+    flex: 1;
+    height: 34px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: var(--text);
+    font: inherit;
+    cursor: pointer;
+}
+
+#period > button.active {
+    color: var(--bg);
+    transition: color 0.2s ease;
+}
+
+
+/* --- Стрелки диапазона --- */
+#range {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 240px;
+    margin: 0 auto 24px;
+    user-select: none;
+}
+
+#range button {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    padding: 0 0 2px;
+    border: 0;
+    border-radius: 8px;
+    background: transparent;
+    color: var(--text);
+    font: inherit;
+    font-size: 18px;
+    line-height: 1;
+    cursor: pointer;
+}
+
+#range button:active {
+    transform: scale(0.94);
+}
+
+#range-label {
+    display: flex;
+    gap: 10px;
+    color: var(--text);
+    font-variant-numeric: tabular-nums;
+}
+
+/* --- Карточки --- */
+.card {
+    padding: 0 30px 70px 0;
+}
+
+/* --- Горизонтальные списки (теги, цвет, форма) --- */
+.h-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.h-col {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.h-label {
+    font-size: 13px;
+    overflow: hidden;
+    white-space: normal;
+    color: var(--help);
+}
+
+.h-value {
+    position: relative;
+    height: 16px;
+}
+
+.h-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 16px;
+    min-width: 2px;
+    border-radius: 2px 4px 4px 2px;
+    overflow: hidden;
+    background: var(--color);
+    width: calc(var(--count) / var(--total) * 100%);
+}
+
+.split {
+    background: linear-gradient(
+            to right,
+            var(--yellow) calc((1 - var(--fails) / var(--count)) * 100%),
+            var(--blue) calc((1 - var(--fails) / var(--count)) * 100%)
+    );
+}
+
+.h-number {
+    position: absolute;
+    top: 0;
+    left: calc((var(--count) + var(--fails)) / var(--total) * 100%);
+    margin-left: 10px;
+    font-size: 13px;
+    line-height: 16px;
+    white-space: nowrap;
+    color: var(--text);
+}
+
+/* --- Вертикальные графики --- */
+.v-chart {
+    position: relative;
+    width: 100%;
+    height: 240px;
+}
+
+.v-chart section {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-bottom: 1px solid var(--line);
+}
+
+.v-normal {
+    position: absolute;
+    left: 0;
+    right: 5px;
+    border-top: 1px dashed var(--line);
+    pointer-events: none;
+    bottom: calc(var(--count) / var(--total) * 100%);
+}
+
+.v-normal span {
+    position: absolute;
+    right: -10px;
+    bottom: 0;
+    color: var(--help);
+    transform: translateX(100%) translateY(40%);
+    font-size: 11px;
+}
+
+.v-row {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-around;
+    gap: 4px;
+    padding: 0 4px;
+}
+
+.v-col {
+    height: 100%;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    min-width: 0;
+}
+
+.v-bar {
+    width: 100%;
+    max-width: 16px;
+    min-height: 2px;
+    border-radius: 4px 4px 2px 2px;
+    background: var(--color);
+    height: calc(var(--count) / var(--total) * 100%);
+}
+
+.v-number {
+    margin-bottom: 5px;
+    font-size: 11px;
+    color: var(--text);
+}
+
+.v-label {
+    position: absolute;
+    bottom: -30px;
+    font-size: 12px;
+    white-space: nowrap;
+    color: var(--help) !important;
+}
+
+/* ==========================================================================
+   12. СТРАНИЦА НАСТРОЕК
+   ========================================================================== */
+
+#person-page > button,
+#person-page > a {
+    display: flex;
+    gap: 10px;
+    padding: 10px 20px;
+    width: 100%;
+}
+
+#profile {
+    max-width: 500px;
+    width: 100%;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    padding: 0 10px 60px;
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
+}
+
+.label {
+    color: var(--help);
+    font-size: 13px;
+}
+
+.input {
+    width: 100%;
+    min-height: 48px;
+    padding: 12px 14px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    color: var(--text);
+    font: inherit;
+    outline: 0;
+}
+
+.input::placeholder {
+    color: var(--help);
+}
+
+#birthdate,
+#weight {
+    font-variant-numeric: tabular-nums;
+}
+
+#birthdate::selection,
+#weight::selection {
+    background: transparent;
+}
+
+.sex {
+    flex: 1;
+}
+
+.weight {
+    max-width: 100px;
+}
+
+.weight > div {
+    position: relative;
+}
+
+.weight > div .input {
+    padding-right: 32px;
+}
+
+.unit {
+    position: absolute;
+    top: 50%;
+    right: 14px;
+    transform: translateY(-50%);
+    color: var(--help);
+    font-size: 15px;
+    pointer-events: none;
+}
+
+#sex {
+    position: relative;
+    display: flex;
+    gap: 4px;
+    padding: 4px;
+    background: var(--head);
+    border-radius: var(--radius);
+}
+
+#sex::before {
+    content: "";
+    position: absolute;
+    inset: 4px auto 4px 4px;
+    width: calc(50% - 6px);
+    border-radius: 9px;
+    background: var(--accent);
+    transition: transform .28s;
+}
+
+#sex.male::before {
+    transform: translateX(calc(100% + 4px));
+}
+
+.segment input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    clip-path: inset(50%);
+}
+
+.segment label {
+    position: relative;
+    z-index: 1;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 43px;
+    padding: 0 10px;
+    border-radius: 9px;
+    color: var(--muted);
+    font-size: 15px;
+    white-space: nowrap;
+    cursor: pointer;
+    user-select: none;
+}
+
+.segment input:checked + label {
+    color: var(--bg);
+    transition: color .28s;
+}
+
+/*Модальное окно*/
+
+#delete {
+    padding: 10px 16px;
+    border: 0;
+    border-radius: 8px;
+    background: var(--head);
+    color: var(--text);
+}
+
+#modal {
+    position: fixed;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    z-index: 10;
+    background: #0004;
+    opacity: 1;
+    transition: opacity 180ms;
+}
+
+#modal[hidden] {
+    display: none;
+    opacity: 0;
+}
+
+.dialog {
+    width: calc(100% - 40px);
+    padding: 20px;
+    box-sizing: border-box;
+    border-radius: 12px;
+    background: var(--bg);
+    text-align: center;
+}
+
+.dialog p {
+    margin: 0 0 20px;
+}
+
+.actions {
+    display: flex;
+    gap: 10px;
+}
+
+.actions button {
+    flex: 1;
+    border-radius: 12px;
+    padding: 20px;
+}
+
+#confirm {
+    background: var(--accent);
+    color: var(--bg);
+}
+
+#cancel {
+    background: var(--head);
+    color: var(--text);
+}
