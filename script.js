@@ -8,7 +8,7 @@ const whenCalendar = document.getElementById('when-calendar');
 const getColorStyle = (color) => `--inner: var(--inner-${color});--outer: var(--outer-${color})`
 
 const setLanguage = () => {
-    const language = navigator.language?.toLowerCase().startsWith('ru') ? 'ru' : 'en';
+    const language = navigator.language?.toLowerCase().startsWith('en') ? 'ru' : 'en';
     document.documentElement.lang = language;
     S = translations[language];
 
