@@ -4,10 +4,11 @@
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no"/>
     <meta name="mobile-web-app-capable" content="yes"/>
-    <meta name="theme-color" content="#2a2a2a"/>
+    <meta name="theme-color" content="#f7f6f4" media="(prefers-color-scheme: light)"/>
+    <meta name="theme-color" content="#2a2a2a" media="(prefers-color-scheme: dark)"/>
     <meta name="msapplication-config" content="none">
 
-    <title data-i18n="appName"></title>
+    <title data-i18n="appName">Poop Tracker</title>
 
     <link rel="canonical" href="https://yugle7.github.io/poop-tracker/"/>
     <link rel="manifest" href="manifest.webmanifest"/>
@@ -39,9 +40,9 @@
 
                     <button id="pooped-time" aria-haspopup="dialog" class="tap"
                             data-i18n-aria-label="selectTime"></button>
-
                 </div>
             </section>
+
             <section>
                 <div id="bristol-label"></div>
                 <br>
@@ -67,8 +68,7 @@
             <section>
                 <div class="row add">
                     <h3 data-i18n="tags"></h3>
-                    <button id="edit-tags" class="right help small" data-i18n="change">
-                    </button>
+                    <button id="edit-tags" class="right help small" data-i18n="change"></button>
                 </div>
                 <br>
                 <div id="tag-buttons"></div>
@@ -77,19 +77,14 @@
             <button id="remove" class="red hidden pad-20" data-i18n="remove"></button>
 
             <button id="approve" data-i18n-aria-label="approve">
-                <svg>
-                    <use href="sprite.svg#save"></use>
-                </svg>
+                <svg><use href="sprite.svg#save"></use></svg>
             </button>
 
             <button id="reject" data-i18n-aria-label="reject">
-                <svg>
-                    <use href="sprite.svg#cancel"></use>
-                </svg>
+                <svg><use href="sprite.svg#cancel"></use></svg>
             </button>
         </div>
     </div>
-
 
     <div id="tags-editor">
         <div class="row">
@@ -113,7 +108,7 @@
             <button id="day" class="tap"></button>
             <button id="hour" class="tap"></button>
 
-            <svg id="colon" viewBox="0 0 6 24" width="6" height="24">
+            <svg id="colon" viewBox="0 0 6 24" width="6" height="24" aria-hidden="true">
                 <circle cx="3" cy="8" r="1" stroke="var(--text)" fill="none"/>
                 <circle cx="3" cy="16" r="1" stroke="var(--text)" fill="none"/>
             </svg>
@@ -136,17 +131,13 @@
 
         <footer>
             <button id="when-prev" data-i18n-aria-label="previous">
-                <svg>
-                    <use href="sprite.svg#prev"></use>
-                </svg>
+                <svg><use href="sprite.svg#prev"></use></svg>
             </button>
 
             <span id="when-month"></span>
 
             <button id="when-next" data-i18n-aria-label="next">
-                <svg>
-                    <use href="sprite.svg#next"></use>
-                </svg>
+                <svg><use href="sprite.svg#next"></use></svg>
             </button>
 
             <button id="close-when" class="right" data-i18n="cancel"></button>
@@ -164,18 +155,12 @@
     </div>
 
     <div id="range">
-        <button type="button" data-add="-1"
-                data-i18n-aria-label="previousPeriod">
-            <svg>
-                <use href="sprite.svg#prev"></use>
-            </svg>
+        <button type="button" data-add="-1" data-i18n-aria-label="previousPeriod">
+            <svg><use href="sprite.svg#prev"></use></svg>
         </button>
         <span id="range-label"></span>
-        <button type="button" data-add="1"
-                data-i18n-aria-label="nextPeriod">
-            <svg>
-                <use href="sprite.svg#next"></use>
-            </svg>
+        <button type="button" data-add="1" data-i18n-aria-label="nextPeriod">
+            <svg><use href="sprite.svg#next"></use></svg>
         </button>
     </div>
 
@@ -185,9 +170,7 @@
         <div class="h-list" id="tags-list"></div>
         <br/>
         <button class="row gap-10" id="with-fails">
-            <svg class="tool">
-                <use href="sprite.svg#check"></use>
-            </svg>
+            <svg class="tool"><use href="sprite.svg#check"></use></svg>
             <span data-i18n="withFails" class="help small"></span>
         </button>
     </div>
@@ -235,46 +218,35 @@
     </div>
 </section>
 
-
 <section id="person-page" class="width-500 safe hidden">
     <br/>
 
-    <button id="person">
-        <svg class="icon">
-            <use href="sprite.svg#person"></use>
-        </svg>
+    <button id="person" data-i18n-aria-label="person">
+        <svg class="icon"><use href="sprite.svg#person"></use></svg>
         <span class="row gap-10"></span>
     </button>
 
     <br/>
 
     <a href="https://pay.cloudtips.ru/p/9e3a23d6" target="_blank">
-        <svg class="icon">
-            <use href="sprite.svg#heart"></use>
-        </svg>
+        <svg class="icon"><use href="sprite.svg#heart"></use></svg>
         <span data-i18n="support"></span>
     </a>
 
     <a href="mailto:yuzhakov.gleb@gmail.com?subject=PoopTracker">
-        <svg class="icon">
-            <use href="sprite.svg#chat"></use>
-        </svg>
+        <svg class="icon"><use href="sprite.svg#chat"></use></svg>
         <span data-i18n="mailTo"></span>
     </a>
 
     <a href="https://yugle7.github.io/poop-tracker/privacy.html" target="_blank">
-        <svg class="icon">
-            <use href="sprite.svg#shield"></use>
-        </svg>
+        <svg class="icon"><use href="sprite.svg#shield"></use></svg>
         <span data-i18n="privacy"></span>
     </a>
 
     <br/>
 
     <button id="reset" class="left row gap-10 pad-10">
-        <svg class="icon">
-            <use href="sprite.svg#reset"></use>
-        </svg>
+        <svg class="icon"><use href="sprite.svg#reset"></use></svg>
         <span data-i18n="reset"></span>
     </button>
 
@@ -289,7 +261,6 @@
                         type="text"
                         inputmode="numeric"
                         autocomplete="off"
-                        autocorrect="off"
                         autocapitalize="off"
                         placeholder="31.12.2000"
                         spellcheck="false"
@@ -345,28 +316,20 @@
 
 <nav data-i18n-aria-label="mainNavigation">
     <div id="nav">
-        <button data-page="calendar" class="pad-10 active" data-i18n-aria-label="calendar" aria-selected="true">
-            <svg>
-                <use href="sprite.svg#calendar"></use>
-            </svg>
+        <button data-page="calendar" class="pad-10 active" data-i18n-aria-label="calendar" aria-current="page">
+            <svg><use href="sprite.svg#calendar"></use></svg>
         </button>
 
         <button data-page="record" class="pad-10" data-i18n-aria-label="record">
-            <svg>
-                <use href="sprite.svg#plus"></use>
-            </svg>
+            <svg><use href="sprite.svg#plus"></use></svg>
         </button>
 
         <button data-page="stats" class="pad-10" data-i18n-aria-label="stats">
-            <svg>
-                <use href="sprite.svg#stats"></use>
-            </svg>
+            <svg><use href="sprite.svg#stats"></use></svg>
         </button>
 
         <button data-page="person" class="pad-10" data-i18n-aria-label="person">
-            <svg>
-                <use href="sprite.svg#settings"></use>
-            </svg>
+            <svg><use href="sprite.svg#settings"></use></svg>
         </button>
     </div>
 </nav>
@@ -393,16 +356,12 @@
             })
             .then((reg) => {
                 reg.update();
-
                 if (reg.waiting) {
                     reg.waiting.postMessage("skipWaiting");
                 }
-
                 navigator.serviceWorker.addEventListener(
                     "controllerchange",
-                    () => {
-                        window.location.reload();
-                    }
+                    () => window.location.reload()
                 );
             });
     }
