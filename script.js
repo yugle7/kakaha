@@ -1081,7 +1081,7 @@ const renderPerson = () => {
 
 const openPersonPicker = () => {
     if (person.birthdate) {
-        birthdate.digits = person.birthdate.toString();
+        birthdate.digits = person.birthdate.toString().padStart(8, '0');
         birthdate.cursor = birthdate.digits.length;
         birthdateInput.value = formatDate();
     } else {
@@ -1224,8 +1224,7 @@ birthdateInput.addEventListener('beforeinput', e => {
             }
         }
 
-        birthdate.digits = birthdate.digits.slice(0, birthdate.cursor - 1)
-            + birthdate.digits.slice(birthdate.cursor);
+        birthdate.digits = birthdate.digits.slice(0, birthdate.cursor - 1) + birthdate.digits.slice(birthdate.cursor);
         birthdate.cursor--;
         normalize();
         setValue();
